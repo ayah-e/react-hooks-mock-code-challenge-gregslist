@@ -5,6 +5,12 @@ import ListingsContainer from "./ListingsContainer";
 function App() {
 
 const [items, setItems] = useState([]);
+const [search, setSearch] = useState("");
+
+function handleSearch(e){
+  setSearch(e.target.value);
+}
+const filteredItems = items.filter(freeItem => freeItem.description.toLowerCase().includes(search.toLowerCase()));
 
 useEffect(() => {
 fetch("http://localhost:6001/listings")
@@ -21,8 +27,8 @@ setItems(filteredArray)
 
   return (
     <div className="app">
-      <Header />
-      <ListingsContainer items = {items} handleDelete = {handleDelete}/>
+      <Header handleSearch = {handleSearch}/>
+      <ListingsContainer items = {filteredItems} handleDelete = {handleDelete}/>
     </div>
   );
 }
